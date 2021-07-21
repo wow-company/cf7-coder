@@ -1,0 +1,17 @@
+.CodeMirror {
+	width: 100% !important;
+	height: 450px !important;
+	margin-top: 15px;
+	overflow-x: auto;
+	overflow-y: auto;
+	word-wrap: break-word;
+}
+
+.wpcf7-custom-css {
+	margin: 15px 0 0 46px;
+}
+
+.wpcf7-custom-css ul {
+	margin-left: 15px;
+	list-style: square;
+}

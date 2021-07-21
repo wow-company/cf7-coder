@@ -1,0 +1,55 @@
+﻿=== CF7 Coder ===
+Contributors: Wpcalc
+Donate link: https://wow-estore.com/
+Tags: cf7, contact form, contact form editor
+Requires at least: 5.0
+Tested up to: 5.8
+Requires PHP: 5.6
+Stable tag: 0.2
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+Add a HTML and CSS code editor for contact form 7 forms.
+
+== Description ==
+Contact Form 7 plugin allow editing forms with standard textarea. This addon  'CF7 Coder' allows adds HTML editor with code highlighter and custom CSS for each contact form.
+
+You can add the custom CSS via editor with code highlighter and thus quickly change the style of the form.
+
+You can also hide the form from users using Test Mode. The form in this mode will be available only to the site administrator.
+
+For work with this Addon, you should have a little skills in working with HTML and CSS.
+
+
+= Main features =
+* Added HTML editor;
+* Added CSS editor;
+* Added Test Mode for form;
+* Remove auto added p tags into the form.
+
+To improve the plugin's functions and add new functions, write to us on the support [forum](https://wordpress.org/support/plugin/cf7-coder/) .
+
+To improve the plugin's functions and add new functions, write to us on the support [forum](https://wordpress.org/support/plugin/calculator-builder/) or send requests on the [github](https://github.com/wow-company/cf7-coder/issues).
+
+Project on GitHub [https://github.com/wow-company/calculator-builder/](https://github.com/wow-company/cf7-coder/issues)
+
+= Support =
+Search for answers and ask your questions at [forum](https://wordpress.org/support/plugin/cf7-coder/)
+
+
+== Installation ==
+* Installation option 1: Find and install this plugin in the `Plugins` -> `Add new` section of your `wp-admin`
+* Installation option 2: Download the zip file, then upload the plugin via the wp-admin in the `Plugins` -> `Add new` section. Or unzip the archive and upload the folder to the plugins directory `/wp-content/plugins/` via ftp
+* Press `Activate` when you have installed the plugin via dashboard or press `Activate` in the in the `Plugins` list 
+* Go to `Contact Form`
+
+== Screenshots ==
+1. Contact Form
+2. HTML editor
+3. CSS editor
+
+
+== Changelog ==
+
+= 0.1 =
+* Initial release
