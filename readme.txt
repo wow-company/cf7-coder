@@ -9,12 +9,12 @@ Stable tag: 0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Contact Form 7 Extension for adding custom HTML and CSS
+Add HTML, CSS and JS editors to Contact Form 7.
 
 == Description ==
-Contact Form 7 plugin allow editing forms with standard textarea. This addon  'CF7 Coder' allows adds HTML editor with code highlighter and custom CSS for each contact form.
+Contact Form 7 plugin allow editing forms with standard textarea. This addon  'CF7 Coder' allows adds HTML editor with code highlighter and custom CSS, JS for each contact form.
 
-You can add the custom CSS via editor with code highlighter and thus quickly change the style of the form.
+You can add the custom CSS and JS via editor with code highlighter and thus quickly change the style of the form.
 
 You can also hide the form from users using Test Mode. The form in this mode will be available only to the site administrator.
 
@@ -24,6 +24,7 @@ For work with this Addon, you should have a little skills in working with HTML a
 = Main features =
 * Added HTML editor;
 * Added CSS editor;
+* Added JS editor;
 * Added Test Mode for form;
 * Remove auto added p tags into the form.
 
