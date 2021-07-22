@@ -21,7 +21,7 @@
           },
           'direction': 'ltr',
           'gutters': ['CodeMirror-lint-markers'],
-          "mode"              : "css",
+          'mode': 'css',
           'lint': true,
           'autoCloseBrackets': true,
           'autoCloseTags': true,
@@ -30,20 +30,6 @@
           },
           'tabSize': 2,
         };
-
-    if ($('#wpcf7-custom-css').length) {
-      let codemirror_el = {
-        "errors"                    : true,
-        "box-model"                 : true,
-        "display-property-grouping" : true,
-        "duplicate-properties"      : true,
-        "known-properties"          : true,
-        "outline-none"              : true
-      };
-      editorSettings.codemirror = Object.assign( editorSettings.codemirror, codemirror_gen, codemirror_el);
-
-      var editorCSS = wp.codeEditor.initialize('wpcf7-custom-css', editorSettings);
-    }
 
     if ($('#wpcf7-form').length) {
       let codemirror_el =
@@ -63,9 +49,55 @@
             'mode': 'htmlmixed',
           };
 
-      editorSettings.codemirror = Object.assign( editorSettings.codemirror, codemirror_gen, codemirror_el);
+      editorSettings.codemirror = Object.assign(editorSettings.codemirror, codemirror_gen, codemirror_el);
 
       var editorHTML = wp.codeEditor.initialize('wpcf7-form', editorSettings);
+    }
+
+    if ($('#wpcf7-custom-css').length) {
+      let codemirror_el = {
+        'errors': true,
+        'box-model': true,
+        'display-property-grouping': true,
+        'duplicate-properties': true,
+        'known-properties': true,
+        'outline-none': true,
+      };
+      editorSettings.codemirror = Object.assign(editorSettings.codemirror, codemirror_gen, codemirror_el);
+
+      var editorCSS = wp.codeEditor.initialize('wpcf7-custom-css', editorSettings);
+    }
+
+    if ($('#wpcf7-custom-js').length) {
+      let codemirror_el = {
+        'boss': true,
+        'curly': true,
+        'eqeqeq': true,
+        'eqnull': true,
+        'es3': true,
+        'expr': true,
+        'immed': true,
+        'noarg': true,
+        'nonbsp': true,
+        'onevar': true,
+        'quotmark': 'single',
+        'trailing': true,
+        'undef': true,
+        'unused': true,
+        'browser': true,
+        'globals': {
+          '_': false,
+          'Backbone': false,
+          'jQuery': true,
+          'JSON': false,
+          'wp': false,
+        },
+        'mode': 'javascript',
+      };
+
+      editorSettings.codemirror = Object.assign(editorSettings.codemirror, codemirror_gen, codemirror_el);
+
+      var editorJS = wp.codeEditor.initialize('wpcf7-custom-js', editorSettings);
     }
 
     var $wpcf7_taggen_insert = wpcf7.taggen.insert;
@@ -86,13 +118,12 @@
 
     function sincronized_codemirror() {
       var text = editorHTML.codemirror.getValue();
-      document.getElementById("wpcf7-form").value = text;
+      document.getElementById('wpcf7-form').value = text;
     }
 
-    editorHTML.codemirror.on('keyup', function () {
+    editorHTML.codemirror.on('keyup', function() {
       sincronized_codemirror();
     });
-
 
   });
 })(jQuery);

@@ -58,11 +58,11 @@ class CF7_Coder {
 			wp_enqueue_script( 'csslint' );
 			wp_enqueue_script( 'jshint' );
 
-			$url_style = plugin_dir_url( __FILE__ ) . '/assets/style.css';
+			$url_style = plugin_dir_url( __FILE__ ) . 'assets/style.css';
 			wp_enqueue_style( "coder-wpcf7", $url_style );
 
-			$url_script = plugin_dir_url( __FILE__ ) . '/assets/script.js';
-			wp_enqueue_script( "coder-wpcf7", $url_script, [ "jquery" ], $version, true );
+			$url_script = plugin_dir_url( __FILE__ ) . 'assets/script.js';
+			wp_enqueue_script( "coder-wpcf7", $url_script, [ "jquery" ], $version, false );
 		}
 
 	}
@@ -72,6 +72,11 @@ class CF7_Coder {
 		$panels['wpcf7-editor-panel-style'] = array(
 			'title'    => esc_attr__( 'CSS', 'cf7-coder' ),
 			'callback' => [ $this, 'wpcf7_editor_style_settings' ],
+		);
+
+		$panels['wpcf7-editor-panel-script'] = array(
+			'title'    => esc_attr__( 'JS', 'cf7-coder' ),
+			'callback' => [ $this, 'wpcf7_editor_script_settings' ],
 		);
 
 		return $panels;
@@ -96,6 +101,19 @@ class CF7_Coder {
         </legend>
 		<?php
 	}
+
+	// Panel for Script
+	function wpcf7_editor_script_settings( $post ) {
+		?>
+        <h2><?php echo esc_html_e( 'JS', 'cf7-coder' ); ?></h2>
+        <fieldset>
+
+            <textarea id="wpcf7-custom-js" name="wpcf7-custom-js" cols="100" rows="8"
+                      class="large-text"><?php echo esc_textarea( $post->prop( 'wpcf7_custom_js' ) ); ?></textarea>
+        </fieldset>
+		<?php
+	}
+
 
 	// Add checkbox 'Test Mode' in sidebar
 	public function wpcf7_add_test_mode() {
@@ -125,6 +143,7 @@ class CF7_Coder {
 	function wpcf7_add_properties( $properties ) {
 		$more_properties = array(
 			'wpcf7_custom_css'       => '',
+			'wpcf7_custom_js'        => '',
 			'wpcf7_test_mode'        => '',
 			'wpcf7_remove_auto_tags' => '',
 		);
@@ -140,6 +159,9 @@ class CF7_Coder {
 
 		if ( isset( $_POST['wpcf7-custom-css'] ) ) {
 			$properties['wpcf7_custom_css'] = trim( sanitize_textarea_field( $_POST['wpcf7-custom-css'] ) );
+		}
+		if ( isset( $_POST['wpcf7-custom-js'] ) ) {
+			$properties['wpcf7_custom_js'] = trim( sanitize_textarea_field( $_POST['wpcf7-custom-js'] ) );
 		}
 
 		$properties['wpcf7_test_mode']        = isset( $_POST['wpcf7-test-mode'] ) ? '1' : '';
@@ -163,6 +185,11 @@ class CF7_Coder {
 				$css    = trim( preg_replace( '~\s+~s', ' ', $css ) );
 				$output .= '<style>' . esc_attr( $css ) . '</style>';
 			}
+			$js = get_post_meta( $atts['id'], '_wpcf7_custom_js', true );
+			if ( ! empty( $js ) ) {
+				echo '<script type="text/javascript">' . wp_specialchars_decode( $js, ENT_QUOTES ) . '</script>';
+			}
+
 			$test_mode = get_post_meta( $atts['id'], '_wpcf7_test_mode', true );
 			if ( ! empty( $test_mode ) && ! current_user_can( 'administrator' ) ) {
 				$output = '';
