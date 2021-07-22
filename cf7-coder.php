@@ -86,7 +86,7 @@ class CF7_Coder {
 	// Panel for CSS
 	function wpcf7_editor_style_settings( $post ) {
 		?>
-        <h2><?php echo esc_html_e( 'CSS', 'cf7-coder' ); ?></h2>
+        <h2><?php esc_html_e( 'CSS', 'cf7-coder' ); ?></h2>
         <fieldset>
 
             <textarea id="wpcf7-custom-css" name="wpcf7-custom-css" cols="100" rows="8" class="large-text"
@@ -97,6 +97,9 @@ class CF7_Coder {
             <ul>
                 <li><b>wpcf7</b> - for style of the form wrapper</li>
                 <li><b>wpcf7-form</b> - for form style</li>
+                <li><b>wpcf7-not-valid-tip</b> - field validation text </li>
+                <li><b>wpcf7-response-output</b> - send status message </li>
+                <li><b>wpcf7-response-output</b> - send status message </li>
             </ul>
         </legend>
 		<?php
@@ -105,7 +108,7 @@ class CF7_Coder {
 	// Panel for Script
 	function wpcf7_editor_script_settings( $post ) {
 		?>
-        <h2><?php echo esc_html_e( 'JS', 'cf7-coder' ); ?></h2>
+        <h2><?php esc_html_e( 'JS', 'cf7-coder' ); ?></h2>
         <fieldset>
 
             <textarea id="wpcf7-custom-js" name="wpcf7-custom-js" cols="100" rows="8"
@@ -206,7 +209,7 @@ function wpcf7_coder_load() {
 	if ( ! class_exists( 'WPCF7' ) ) {
 		require_once 'class.wpcf7coder-extension-activation.php';
 		$activation = new wpcf7_Coder_Extension_Activation( plugin_dir_path( __FILE__ ), basename( __FILE__ ) );
-		$activation = $activation->run();
+		 $activation = $activation->run();
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 	} else {
 		new CF7_Coder();
