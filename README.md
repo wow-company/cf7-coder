@@ -20,6 +20,6 @@ For work with this Addon, you should have a little skills in working with HTML a
 
 To improve the plugin's functions and add new functions, write to us on the support [forum](https://wordpress.org/support/plugin/cf7-coder/) .
 
-To improve the plugin's functions and add new functions, write to us on the support [forum](https://wordpress.org/support/plugin/calculator-builder/) or send requests on the [github](https://github.com/wow-company/cf7-coder/issues).
+To improve the plugin's functions and add new functions, write to us on the support [forum](https://wordpress.org/support/plugin/cf7-coder/) or send requests on the [github](https://github.com/wow-company/cf7-coder/issues).
 
-Project on GitHub [https://github.com/wow-company/calculator-builder/](https://github.com/wow-company/cf7-coder/issues).
+Project on GitHub [https://github.com/wow-company/cf7-coder/](https://github.com/wow-company/cf7-coder/).
