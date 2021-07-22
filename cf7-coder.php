@@ -27,13 +27,13 @@ if ( ! defined( "ABSPATH" ) ) {
 
 class CF7_Coder {
 	public function __construct() {
-		add_action( 'plugins_loaded', [ $this, "text_domain" ]);
+		add_action( 'plugins_loaded', [ $this, "text_domain" ] );
 		add_action( "admin_enqueue_scripts", [ $this, "style_script" ] );
 		add_filter( 'wpcf7_editor_panels', [ $this, 'wpcf7_editor_add_panels' ] );
 		add_filter( 'wpcf7_contact_form_properties', [ $this, 'wpcf7_add_properties' ] );
 		add_action( 'wpcf7_save_contact_form', [ $this, 'wpcf7_save' ] );
 		add_filter( 'do_shortcode_tag', [ $this, 'wpcf7_frontend' ], 10, 4 );
-		add_filter( 'wpcf7_autop_or_not', '__return_false' );
+		// add_filter( 'wpcf7_autop_or_not', '__return_false' );
 		add_action( 'wpcf7_admin_misc_pub_section', [ $this, 'wpcf7_add_test_mode' ] );
 	}
 
@@ -110,13 +110,24 @@ class CF7_Coder {
             </label>
         </div>
 		<?php
+		$post_id = isset( $_GET['post'] ) ? absint( $_GET['post'] ) : '-1';
+		$checked = get_post_meta( $post_id, '_wpcf7_remove_auto_tags', true );
+		?>
+        <div class="misc-pub-section">
+            <label class="wpcf7-remove-auto-tags">
+                <input value="1" type="checkbox" name="wpcf7-remove-auto-tags" <?php checked( $checked ); ?>>
+				<?php esc_html_e( 'Remove Auto tags p and br', 'cf7-coder' ); ?>
+            </label>
+        </div>
+		<?php
 	}
 
 	// Add properties for form
 	function wpcf7_add_properties( $properties ) {
 		$more_properties = array(
-			'wpcf7_custom_css' => '',
-			'wpcf7_test_mode'  => '',
+			'wpcf7_custom_css'       => '',
+			'wpcf7_test_mode'        => '',
+			'wpcf7_remove_auto_tags' => '',
 		);
 
 		return array_merge( $more_properties, $properties );
@@ -132,7 +143,8 @@ class CF7_Coder {
 			$properties['wpcf7_custom_css'] = trim( sanitize_textarea_field( $_POST['wpcf7-custom-css'] ) );
 		}
 
-		$properties['wpcf7_test_mode'] = isset( $_POST['wpcf7-test-mode'] ) ? '1' : '';
+		$properties['wpcf7_test_mode']        = isset( $_POST['wpcf7-test-mode'] ) ? '1' : '';
+		$properties['wpcf7_remove_auto_tags'] = isset( $_POST['wpcf7-remove-auto-tags'] ) ? '1' : '';
 
 
 		$contact_form->set_properties( $properties );
@@ -143,6 +155,10 @@ class CF7_Coder {
 	function wpcf7_frontend( $output, $tag, $atts, $m ) {
 
 		if ( $tag === 'contact-form-7' ) {
+			$remove_tags = get_post_meta( $atts['id'], '_wpcf7_remove_auto_tags', true );
+			if ( ! empty( $remove_tags ) ) {
+				$output = str_replace( array( '<p>', '</p>', '<br/>' ), '', $output );;
+			}
 			$css = get_post_meta( $atts['id'], '_wpcf7_custom_css', true );
 			if ( ! empty( $css ) ) {
 				$css    = trim( preg_replace( '~\s+~s', ' ', $css ) );
@@ -159,19 +175,14 @@ class CF7_Coder {
 
 }
 
-
+add_action( 'plugins_loaded', 'wpcf7_coder_load', 999 );
 function wpcf7_coder_load() {
-	if (!class_exists('WPCF7')) {
+	if ( ! class_exists( 'WPCF7' ) ) {
 		require_once 'class.wpcf7coder-extension-activation.php';
-		$activation = new wpcf7_Coder_Extension_Activation(plugin_dir_path(__FILE__), basename(__FILE__));
+		$activation = new wpcf7_Coder_Extension_Activation( plugin_dir_path( __FILE__ ), basename( __FILE__ ) );
 		$activation = $activation->run();
-		deactivate_plugins(plugin_basename(__FILE__));
+		deactivate_plugins( plugin_basename( __FILE__ ) );
 	} else {
 		new CF7_Coder();
 	}
 }
-
-add_action('plugins_loaded', 'wpcf7_coder_load', 999);
-
-
-
