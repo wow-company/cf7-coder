@@ -1,4 +1,4 @@
-﻿=== CF7 Coder ===
+﻿=== CF7 Coder - Contact Form 7 Extension for coding ===
 Contributors: Wpcalc
 Donate link: https://wow-estore.com/
 Tags: cf7, contact form, contact form editor
@@ -9,7 +9,7 @@ Stable tag: 0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Add a HTML and CSS code editor for contact form 7 forms.
+Contact Form 7 Extension for adding custom HTML and CSS
 
 == Description ==
 Contact Form 7 plugin allow editing forms with standard textarea. This addon  'CF7 Coder' allows adds HTML editor with code highlighter and custom CSS for each contact form.
