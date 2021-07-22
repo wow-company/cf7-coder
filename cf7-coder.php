@@ -33,7 +33,6 @@ class CF7_Coder {
 		add_filter( 'wpcf7_contact_form_properties', [ $this, 'wpcf7_add_properties' ] );
 		add_action( 'wpcf7_save_contact_form', [ $this, 'wpcf7_save' ] );
 		add_filter( 'do_shortcode_tag', [ $this, 'wpcf7_frontend' ], 10, 4 );
-		// add_filter( 'wpcf7_autop_or_not', '__return_false' );
 		add_action( 'wpcf7_admin_misc_pub_section', [ $this, 'wpcf7_add_test_mode' ] );
 	}
 
