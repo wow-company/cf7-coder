@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: CF7 Coder\n"
-"POT-Creation-Date: 2021-07-21 16:03+0300\n"
+"POT-Creation-Date: 2021-07-23 09:04+0300\n"
 "PO-Revision-Date: 2021-07-21 15:08+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -20,6 +20,14 @@ msgstr ""
 "_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#: cf7-coder.php:98
+msgid "Test Mode"
+msgstr ""
+
+#: cf7-coder.php:108
+msgid "Remove Auto tags p and br"
+msgstr ""
 
 #: class.wpcf7coder-extension-activation.php:50
 msgid "This plugin"
@@ -38,24 +46,16 @@ msgstr ""
 msgid " requires Contact Form 7! Please %s first and then activate this."
 msgstr ""
 
-#: coder-for-contact-form-7.php:74 coder-for-contact-form-7.php:85
-msgid "CSS"
-msgstr ""
-
-#: coder-for-contact-form-7.php:109
-msgid "Test Mode"
-msgstr ""
-
 #. Plugin Name of the plugin/theme
-msgid "CF7 Coder"
+msgid "CF7 HTML Editor"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "https://wordpress.org/"
+msgid "https://wordpress.org/cf7-coder"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid "Add custom CSS and HTML editor for Contact Form 7 forms."
+msgid "Add HTML editor to Contact Form 7."
 msgstr ""
 
 #. Author of the plugin/theme

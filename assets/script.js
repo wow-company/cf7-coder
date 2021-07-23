@@ -54,51 +54,6 @@
       var editorHTML = wp.codeEditor.initialize('wpcf7-form', editorSettings);
     }
 
-    if ($('#wpcf7-custom-css').length) {
-      let codemirror_el = {
-        'errors': true,
-        'box-model': true,
-        'display-property-grouping': true,
-        'duplicate-properties': true,
-        'known-properties': true,
-        'outline-none': true,
-      };
-      editorSettings.codemirror = Object.assign(editorSettings.codemirror, codemirror_gen, codemirror_el);
-
-      var editorCSS = wp.codeEditor.initialize('wpcf7-custom-css', editorSettings);
-    }
-
-    if ($('#wpcf7-custom-js').length) {
-      let codemirror_el = {
-        'boss': true,
-        'curly': true,
-        'eqeqeq': true,
-        'eqnull': true,
-        'es3': true,
-        'expr': true,
-        'immed': true,
-        'noarg': true,
-        'nonbsp': true,
-        'onevar': true,
-        'quotmark': 'single',
-        'trailing': true,
-        'undef': true,
-        'unused': true,
-        'browser': true,
-        'globals': {
-          '_': false,
-          'Backbone': false,
-          'jQuery': true,
-          'JSON': false,
-          'wp': false,
-        },
-        'mode': 'javascript',
-      };
-
-      editorSettings.codemirror = Object.assign(editorSettings.codemirror, codemirror_gen, codemirror_el);
-
-      var editorJS = wp.codeEditor.initialize('wpcf7-custom-js', editorSettings);
-    }
 
     var $wpcf7_taggen_insert = wpcf7.taggen.insert;
     wpcf7.taggen.insert = function(content) {
@@ -124,6 +79,9 @@
     editorHTML.codemirror.on('keyup', function() {
       sincronized_codemirror();
     });
+
+    $("#informationdiv_coder").insertAfter("#informationdiv");
+    $("#informationdiv_coder").toggle();
 
   });
 })(jQuery);

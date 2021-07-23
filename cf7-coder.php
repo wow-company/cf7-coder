@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name:       CF7 Coder
+ * Plugin Name:       CF7 HTML Editor
  * Plugin URI:        https://wordpress.org/cf7-coder
- * Description:       Add custom CSS and HTML editor for Contact Form 7 forms.
+ * Description:       Add HTML editor to Contact Form 7.
  * Version:           0.1
  * Author:            Wow-Company
  * Author URI:        https://wow-estore.com/
@@ -29,11 +29,11 @@ class CF7_Coder {
 	public function __construct() {
 		add_action( 'plugins_loaded', [ $this, "text_domain" ] );
 		add_action( "admin_enqueue_scripts", [ $this, "style_script" ] );
-		add_filter( 'wpcf7_editor_panels', [ $this, 'wpcf7_editor_add_panels' ] );
+		add_action( 'wpcf7_admin_footer', [ $this, 'add_sidebar' ] );
+		add_action( 'wpcf7_admin_misc_pub_section', [ $this, 'wpcf7_add_test_mode' ] );
 		add_filter( 'wpcf7_contact_form_properties', [ $this, 'wpcf7_add_properties' ] );
 		add_action( 'wpcf7_save_contact_form', [ $this, 'wpcf7_save' ] );
 		add_filter( 'do_shortcode_tag', [ $this, 'wpcf7_frontend' ], 10, 4 );
-		add_action( 'wpcf7_admin_misc_pub_section', [ $this, 'wpcf7_add_test_mode' ] );
 	}
 
 	// Download the folder with languages
@@ -55,8 +55,7 @@ class CF7_Coder {
 			wp_enqueue_script( 'code-editor' );
 			wp_enqueue_style( 'code-editor' );
 			wp_enqueue_script( 'htmlhint' );
-			wp_enqueue_script( 'csslint' );
-			wp_enqueue_script( 'jshint' );
+
 
 			$url_style = plugin_dir_url( __FILE__ ) . 'assets/style.css';
 			wp_enqueue_style( "coder-wpcf7", $url_style );
@@ -67,56 +66,26 @@ class CF7_Coder {
 
 	}
 
-	// Add panels
-	function wpcf7_editor_add_panels( $panels ) {
-		$panels['wpcf7-editor-panel-style'] = array(
-			'title'    => esc_attr__( 'CSS', 'cf7-coder' ),
-			'callback' => [ $this, 'wpcf7_editor_style_settings' ],
-		);
-
-		$panels['wpcf7-editor-panel-script'] = array(
-			'title'    => esc_attr__( 'JS', 'cf7-coder' ),
-			'callback' => [ $this, 'wpcf7_editor_script_settings' ],
-		);
-
-		return $panels;
-
-	}
-
-	// Panel for CSS
-	function wpcf7_editor_style_settings( $post ) {
+	function add_sidebar() {
 		?>
-        <h2><?php esc_html_e( 'CSS', 'cf7-coder' ); ?></h2>
-        <fieldset>
+        <div id="informationdiv_coder" class="postbox" style="display:none">
+            <h3>Some helpful information!</h3>
+            <div class="inside">
+                <p> You can use the next classes for change the Contact Form 7 style:</p>
+                <ol>
+                    <li><b>wpcf7</b> - for style of the form wrapper</li>
+                    <li><b>wpcf7-form</b> - for form style</li>
+                    <li><b>wpcf7-not-valid-tip</b> - field validation text</li>
+                    <li><b>wpcf7-response-output</b> - send status message</li>
 
-            <textarea id="wpcf7-custom-css" name="wpcf7-custom-css" cols="100" rows="8" class="large-text"
-                      data-config-field="additional_style.body"><?php echo esc_textarea( $post->prop( 'wpcf7_custom_css' ) ); ?></textarea>
-        </fieldset>
-        <legend class="wpcf7-custom-css">
-            You can use the next classes:
-            <ul>
-                <li><b>wpcf7</b> - for style of the form wrapper</li>
-                <li><b>wpcf7-form</b> - for form style</li>
-                <li><b>wpcf7-not-valid-tip</b> - field validation text </li>
-                <li><b>wpcf7-response-output</b> - send status message </li>
-                <li><b>wpcf7-response-output</b> - send status message </li>
-            </ul>
-        </legend>
+                </ol>
+                <p><a href="<?php echo esc_url( wp_customize_url() ); ?>" class="button is-primary">Customizing CSS</a>
+                </p>
+
+            </div>
+        </div>
 		<?php
 	}
-
-	// Panel for Script
-	function wpcf7_editor_script_settings( $post ) {
-		?>
-        <h2><?php esc_html_e( 'JS', 'cf7-coder' ); ?></h2>
-        <fieldset>
-
-            <textarea id="wpcf7-custom-js" name="wpcf7-custom-js" cols="100" rows="8"
-                      class="large-text"><?php echo esc_textarea( $post->prop( 'wpcf7_custom_js' ) ); ?></textarea>
-        </fieldset>
-		<?php
-	}
-
 
 	// Add checkbox 'Test Mode' in sidebar
 	public function wpcf7_add_test_mode() {
@@ -145,8 +114,6 @@ class CF7_Coder {
 	// Add properties for form
 	function wpcf7_add_properties( $properties ) {
 		$more_properties = array(
-			'wpcf7_custom_css'       => '',
-			'wpcf7_custom_js'        => '',
 			'wpcf7_test_mode'        => '',
 			'wpcf7_remove_auto_tags' => '',
 		);
@@ -159,13 +126,6 @@ class CF7_Coder {
 	function wpcf7_save( $contact_form ) {
 
 		$properties = $contact_form->get_properties();
-
-		if ( isset( $_POST['wpcf7-custom-css'] ) ) {
-			$properties['wpcf7_custom_css'] = trim( sanitize_textarea_field( $_POST['wpcf7-custom-css'] ) );
-		}
-		if ( isset( $_POST['wpcf7-custom-js'] ) ) {
-			$properties['wpcf7_custom_js'] = trim( sanitize_textarea_field( $_POST['wpcf7-custom-js'] ) );
-		}
 
 		$properties['wpcf7_test_mode']        = isset( $_POST['wpcf7-test-mode'] ) ? '1' : '';
 		$properties['wpcf7_remove_auto_tags'] = isset( $_POST['wpcf7-remove-auto-tags'] ) ? '1' : '';
@@ -182,15 +142,6 @@ class CF7_Coder {
 			$remove_tags = get_post_meta( $atts['id'], '_wpcf7_remove_auto_tags', true );
 			if ( ! empty( $remove_tags ) ) {
 				$output = str_replace( array( '<p>', '</p>', '<br/>' ), '', $output );;
-			}
-			$css = get_post_meta( $atts['id'], '_wpcf7_custom_css', true );
-			if ( ! empty( $css ) ) {
-				$css    = trim( preg_replace( '~\s+~s', ' ', $css ) );
-				$output .= '<style>' . esc_attr( $css ) . '</style>';
-			}
-			$js = get_post_meta( $atts['id'], '_wpcf7_custom_js', true );
-			if ( ! empty( $js ) ) {
-				echo '<script type="text/javascript">' . wp_specialchars_decode( $js, ENT_QUOTES ) . '</script>';
 			}
 
 			$test_mode = get_post_meta( $atts['id'], '_wpcf7_test_mode', true );
@@ -209,7 +160,7 @@ function wpcf7_coder_load() {
 	if ( ! class_exists( 'WPCF7' ) ) {
 		require_once 'class.wpcf7coder-extension-activation.php';
 		$activation = new wpcf7_Coder_Extension_Activation( plugin_dir_path( __FILE__ ), basename( __FILE__ ) );
-		 $activation = $activation->run();
+		$activation = $activation->run();
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 	} else {
 		new CF7_Coder();
